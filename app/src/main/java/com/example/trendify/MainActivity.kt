@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import cafe.adriel.voyager.navigator.Navigator
+import com.example.trendify.presentation.ui.LoginSceen
 import com.example.trendify.ui.theme.TrendifyTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,12 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrendifyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android22",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                Navigator(LoginSceen())
             }
         }
     }
