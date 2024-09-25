@@ -14,7 +14,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 class LoginSceen : Screen {
     @Composable
     override fun Content() {
-        TODO("Not yet implemented")
+        loginscreen()
     }
 
 
