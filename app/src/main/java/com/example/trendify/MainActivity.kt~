@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             TrendifyTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android22",
+                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
