@@ -53,54 +53,60 @@ class LoginSceen : Screen {
         val password= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
 
-
+        Column(verticalArrangement = Arrangement.Center) {
+            Text(
+                text = "Sign In",
+                fontSize = 20.sp,
+                fontFamily = FontFamily(Font(resId = R.font.poppins_bold)),
+                modifier = Modifier.width(73.dp).padding(bottom = 30.dp)
+            )
+        }
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
-                Text(
-                    text = "Sign In",
-                    fontSize = 28.sp,
-                    modifier = Modifier.padding(top = 50.dp)
-                )
 
+            Spacer(modifier = Modifier.height(30.dp))
 
             //Email Address TextField
-            Box(modifier = Modifier.fillMaxWidth()){
                 OutlinedTextField(
                     value =username.value ,
                     onValueChange ={username.value=it},
                     modifier = Modifier
                         .width(343.dp)
-                        .height(64.dp)
-                        .padding(start = 16.dp, end = 16.dp, top = 231.dp, bottom = 8.dp),
+                        .height(64.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xff6055D8),
+                        unfocusedBorderColor = Color.White,
+                        cursorColor = Color.Black
+                    ),
                     label = { Text(text = "Name",
                         color = Color(0xff9B9B9B))}
                 )
-            }
             Spacer(modifier = Modifier.height(30.dp))
 
-
-
             //Password TextField
-            Box(modifier = Modifier.fillMaxWidth()){
                 OutlinedTextField(
                     value =password.value ,
                     onValueChange ={password.value=it},
                     modifier = Modifier
                         .width(343.dp)
-                        .height(64.dp)
-                        .padding(start = 16.dp, end = 16.dp, top = 231.dp, bottom = 8.dp),
+                        .height(64.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xff6055D8),
+                        unfocusedBorderColor = Color.White,
+                        cursorColor = Color.Black
+                    ),
                     label = { Text(text = "Password",
                         color = Color(0xff9B9B9B))}
                 )
-            }
+
 
             Spacer(modifier = Modifier.height(30.dp))
 
 
 
             //Recovery Password
-            Row{
+            /*Row{
                 Text(text = "Recovery Password",
                     modifier = Modifier,
                     color = Color(0xff707B81),
@@ -111,21 +117,23 @@ class LoginSceen : Screen {
                         tint = Color.Blue,
                         contentDescription = null)
             }
+            }*/
 
-            //Sign In
+            //Sign In Button
             Button(onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff5B9EE1),
+                    containerColor = Color(0xff6055D8),
                     contentColor = Color.White),
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .height(54.dp)
                     .width(335.dp)
-            )
-            {
+            ) {
                 Text(text = "Sign In",
-                    fontSize = 18.sp)
-            }
+                    fontSize = 18.sp) }
+
+
+            Spacer(modifier = Modifier.height(30.dp))
             Row {
                 Text(text = "Don't have an account?")
                 Spacer(modifier = Modifier.width(5.dp))
@@ -136,5 +144,4 @@ class LoginSceen : Screen {
             }
         }
     }
-}
 }
