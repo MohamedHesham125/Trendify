@@ -9,5 +9,7 @@ class SettingScreen:Screen {
     override fun Content() {
 
         Text(text ="sami" )
+        Text(text ="سلام عليكم" )
+
     }
 }
