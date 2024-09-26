@@ -69,6 +69,8 @@ class LoginSceen : Screen {
             }
 
 
+
+
             //Email Address TextField
             Text(text = "Email Address", modifier = Modifier
                 .fillMaxWidth()
@@ -88,7 +90,7 @@ class LoginSceen : Screen {
                         focusedBorderColor = Color(0xff5B9EE1),
                         unfocusedBorderColor = Color.Gray,
                     ),
-                    placeholder = { Text(text = "Name")}
+                    placeholder = { Text(text = "username")}
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
