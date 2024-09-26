@@ -116,7 +116,7 @@ class LoginSceen : Screen {
 
 
             //Recovery Password
-            Box(modifier = Modifier
+           /* Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)) {
                 Text(text = "Recovery Password",
@@ -126,10 +126,10 @@ class LoginSceen : Screen {
                     color = Color(0xff707B81),
                     fontFamily = FontFamily(Font(resId = R.font.airbnbcereal_w_bk)),
                 )
-            }
+            }*/
 
             //Sign In
-            Button(onClick = { navigator.push(SignUpScreen()) },
+           /* Button(onClick = { navigator.push(SignUpScreen()) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xff5B9EE1),
                     contentColor = Color.White),
@@ -141,30 +141,7 @@ class LoginSceen : Screen {
             {
                 Text(text = "Sign In",
                     fontSize = 18.sp)
-            }
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(onClick = { navigator.push(SignUpScreen()) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black),
-                shape = RoundedCornerShape(50.dp),
-                modifier = Modifier
-                    .height(54.dp)
-                    .width(335.dp)
-
-            )
-            {
-                Image(painter = painterResource(id = R.drawable.google),
-                    contentDescription =null,
-                    modifier = Modifier
-                        .size(28.dp)
-                        .padding(end = 5.dp))
-                Text(
-                    text = "Sign In With Google",
-                    fontSize = 18.sp,
-                )
-
-            }
+            }*/
             Spacer(modifier = Modifier.height(200.dp))
 
             Row {
