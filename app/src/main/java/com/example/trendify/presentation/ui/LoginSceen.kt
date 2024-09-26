@@ -57,25 +57,14 @@ class LoginSceen : Screen {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
-            Row {
-                IconButton(onClick = {null}) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-                }
                 Text(
                     text = "Sign In",
                     fontSize = 28.sp,
                     modifier = Modifier.padding(top = 50.dp)
                 )
-            }
 
 
             //Email Address TextField
-            Text(text = "Email Address", modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 25.dp),
-                fontSize = 16.sp,
-            )
-
             Box(modifier = Modifier.fillMaxWidth()){
                 OutlinedTextField(
                     value =username.value ,
@@ -84,11 +73,8 @@ class LoginSceen : Screen {
                         .width(343.dp)
                         .height(64.dp)
                         .padding(start = 16.dp, end = 16.dp, top = 231.dp, bottom = 8.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xff5B9EE1),
-                        unfocusedBorderColor = Color.Gray,
-                    ),
-                    placeholder = { Text(text = "Name")}
+                    label = { Text(text = "Name",
+                        color = Color(0xff9B9B9B))}
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -104,10 +90,8 @@ class LoginSceen : Screen {
                         .width(343.dp)
                         .height(64.dp)
                         .padding(start = 16.dp, end = 16.dp, top = 231.dp, bottom = 8.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xff5B9EE1),
-                        unfocusedBorderColor = Color.Gray,
-                    )
+                    label = { Text(text = "Password",
+                        color = Color(0xff9B9B9B))}
                 )
             }
 
@@ -116,20 +100,20 @@ class LoginSceen : Screen {
 
 
             //Recovery Password
-           /* Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)) {
+            Row{
                 Text(text = "Recovery Password",
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .clickable { navigator.push(ForgetPasswordScreen()) },
+                    modifier = Modifier,
                     color = Color(0xff707B81),
-                    fontFamily = FontFamily(Font(resId = R.font.airbnbcereal_w_bk)),
+                    fontFamily = FontFamily(Font(resId = R.font.poppins_light)),
                 )
-            }*/
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        tint = Color.Blue,
+                        contentDescription = null)
+            }
 
             //Sign In
-           /* Button(onClick = { navigator.push(SignUpScreen()) },
+            Button(onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xff5B9EE1),
                     contentColor = Color.White),
@@ -141,17 +125,16 @@ class LoginSceen : Screen {
             {
                 Text(text = "Sign In",
                     fontSize = 18.sp)
-            }*/
-            Spacer(modifier = Modifier.height(200.dp))
-
+            }
             Row {
                 Text(text = "Don't have an account?")
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(text = "Signup Free",
                     modifier = Modifier
                         .padding(bottom = 10.dp)
-                        .clickable { navigator.push(SignUpScreen()) })
+                        .clickable { /*TODO*/ })
             }
         }
     }
+}
 }
