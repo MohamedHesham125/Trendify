@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -57,7 +58,7 @@ class LoginSceen : Screen {
         val password= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
 
-Icon(imageVector = Icons.Filled.Close,
+Icon(imageVector = Icons.Filled.ArrowBack,
     contentDescription =null, modifier = Modifier.padding(top = 35.dp).clickable { navigator.push(SignUpScreen()) } )
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
