@@ -114,7 +114,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                     Icon(painter = painterResource(id = R.drawable.round_arrow_right_alt),
                         tint = Color(0xff6055D8),
                         contentDescription = null,
-                        modifier = Modifier.size(30.dp))
+                        modifier = Modifier.size(30.dp).clickable { /*TODO*/ })
             }
             Spacer(modifier = Modifier.height(30.dp))
 
