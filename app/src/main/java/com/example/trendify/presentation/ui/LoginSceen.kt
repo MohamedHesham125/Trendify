@@ -59,13 +59,15 @@ class LoginSceen : Screen {
         val navigator= LocalNavigator.currentOrThrow
 
 Icon(imageVector = Icons.Filled.ArrowBack,
-    contentDescription =null, modifier = Modifier.padding(top = 35.dp).clickable { navigator.push(SignUpScreen()) } )
+    contentDescription =null,
+    modifier = Modifier.padding(top = 8.dp, start = 8.dp).clickable { navigator.push(SignUpScreen()) } )
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
         Text(text = "Sign In",
             fontFamily = FontFamily(Font(resId = R.font.poppins_bold)),
-            fontSize = 20.sp,)
+            fontSize = 20.sp,
+            modifier = Modifier.padding(bottom = 30.dp))
             
             Spacer(modifier = Modifier.height(100.dp))
             //Email Address TextField
@@ -145,6 +147,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                     contentDescription =null,
                     modifier = Modifier
                         .size(30.dp)
+                        .padding(bottom = 10.dp)
                         .clickable { navigator.push(SignUpScreen()) },
                     tint = Color(0xff6055D8))
             }
