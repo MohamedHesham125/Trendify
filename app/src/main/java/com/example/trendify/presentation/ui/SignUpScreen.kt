@@ -170,7 +170,7 @@ class SignUpScreen : Screen {
                         .size(30.dp)
                         .padding(bottom = 10.dp)
                         .clickable { navigator.pop() },
-                    tint = Color(0xff6055D8))
+                    tint = Color(0xffDB3022))
             }
             Spacer(modifier = Modifier.height(300.dp))
         }
