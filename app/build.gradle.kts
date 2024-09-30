@@ -77,7 +77,10 @@ dependencies {
     // Navigator
     implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
 
+    //Android material icons
+    implementation ("com.malinskiy:materialicons:1.0.3")
 
+    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
