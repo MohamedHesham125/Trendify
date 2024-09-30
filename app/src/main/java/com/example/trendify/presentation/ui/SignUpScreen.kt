@@ -44,14 +44,10 @@ class SignUpScreen : Screen {
 
     @Composable
     fun signupscreen(){
-<<<<<<< Updated upstream
-=======
         val name= remember { mutableStateOf("") }
         val phone= remember { mutableStateOf("") }
->>>>>>> Stashed changes
         val email= remember { mutableStateOf("") }
         val password= remember { mutableStateOf("") }
-        val name= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
 
         Icon(imageVector = Icons.Filled.ArrowBack,
@@ -65,11 +61,7 @@ class SignUpScreen : Screen {
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 30.dp))
 
-<<<<<<< Updated upstream
-            Spacer(modifier = Modifier.height(100.dp))
-=======
             Spacer(modifier = Modifier.height(70.dp))
->>>>>>> Stashed changes
 
             //Name TextField
             OutlinedTextField(
