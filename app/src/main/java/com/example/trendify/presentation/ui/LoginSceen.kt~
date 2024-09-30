@@ -105,9 +105,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
             //Recovery Password
             Row(horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.align(alignment = Alignment.End),
-                )
-            {
+                modifier = Modifier.align(alignment = Alignment.End)) {
                 Text(text = "Forget Password",
                     modifier = Modifier,
                     color = Color(0xff707B81),
