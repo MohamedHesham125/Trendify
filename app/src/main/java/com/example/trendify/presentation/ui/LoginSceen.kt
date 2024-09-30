@@ -1,30 +1,23 @@
 package com.example.trendify.presentation.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -54,24 +47,26 @@ class LoginSceen : Screen {
 
     @Composable
     fun loginscreen(){
-        val username= remember { mutableStateOf("") }
+        val email= remember { mutableStateOf("") }
         val password= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
 
 Icon(imageVector = Icons.Filled.ArrowBack,
-    contentDescription =null, modifier = Modifier.padding(top = 35.dp).clickable { navigator.push(SignUpScreen()) } )
+    contentDescription =null,
+    modifier = Modifier.padding(top = 8.dp, start = 8.dp).clickable { navigator.push(SignUpScreen()) } )
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
         Text(text = "Sign In",
             fontFamily = FontFamily(Font(resId = R.font.poppins_bold)),
-            fontSize = 20.sp,)
+            fontSize = 20.sp,
+            modifier = Modifier.padding(bottom = 30.dp))
             
             Spacer(modifier = Modifier.height(100.dp))
             //Email Address TextField
                 OutlinedTextField(
-                    value =username.value ,
-                    onValueChange ={username.value=it},
+                    value =email.value ,
+                    onValueChange ={email.value=it},
                     modifier = Modifier
                         .width(343.dp)
                         .height(64.dp),
@@ -80,7 +75,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                         unfocusedBorderColor = Color.White,
                         cursorColor = Color.Black
                     ),
-                    label = { Text(text = "Name",
+                    label = { Text(text = "Email",
                         color = Color(0xff9B9B9B))},
                     textStyle = TextStyle(fontSize = 16.sp,
                         color = Color.Black),
@@ -105,24 +100,25 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                         color = Color.Black),
                 )
 
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-
+            Spacer(modifier = Modifier.height(27.dp))
 
             //Recovery Password
-            /*Row{
+            Row(horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.align(alignment = Alignment.End)) {
                 Text(text = "Forget Password",
                     modifier = Modifier,
                     color = Color(0xff707B81),
                     fontFamily = FontFamily(Font(resId = R.font.poppins_light)),
                 )
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        tint = Color.Blue,
-                        contentDescription = null)
+                    Icon(painter = painterResource(id = R.drawable.round_arrow_right_alt),
+                        tint = Color(0xff6055D8),
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp))
             }
-            }*/
+            Spacer(modifier = Modifier.height(30.dp))
+
+
 
             //Sign In Button
             Button(onClick = { /*TODO*/ },
@@ -137,7 +133,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                 Text(text = "Sign In",
                     fontSize = 18.sp) }
 
-
+            //don't have an account Button
             Spacer(modifier = Modifier.height(30.dp))
             Row() {
                 Text(text = "Don't have an account?")
@@ -145,6 +141,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                     contentDescription =null,
                     modifier = Modifier
                         .size(30.dp)
+                        .padding(bottom = 10.dp)
                         .clickable { navigator.push(SignUpScreen()) },
                     tint = Color(0xff6055D8))
             }
