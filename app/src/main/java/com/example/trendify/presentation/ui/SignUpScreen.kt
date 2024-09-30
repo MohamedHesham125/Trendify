@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -144,23 +146,7 @@ class SignUpScreen : Screen {
 
             Spacer(modifier = Modifier.height(30.dp))
 
-
-
-            //Recovery Password
-            /*Row{
-                Text(text = "Forget Password",
-                    modifier = Modifier,
-                    color = Color(0xff707B81),
-                    fontFamily = FontFamily(Font(resId = R.font.poppins_light)),
-                )
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        tint = Color.Blue,
-                        contentDescription = null)
-            }
-            }*/
-
-            //Sign In Button
+            //Sign Up Button
             Button(onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xff6055D8),
@@ -181,7 +167,7 @@ class SignUpScreen : Screen {
                     contentDescription =null,
                     modifier = Modifier
                         .size(30.dp)
-                        .padding(bottom = 10.dp)
+                        .padding(bottom = 15.dp)
                         .clickable { navigator.pop() },
                     tint = Color(0xff6055D8))
             }
