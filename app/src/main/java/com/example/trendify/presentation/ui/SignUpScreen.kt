@@ -44,8 +44,9 @@ class SignUpScreen : Screen {
 
     @Composable
     fun signupscreen(){
-        val username= remember { mutableStateOf("") }
+        val email= remember { mutableStateOf("") }
         val password= remember { mutableStateOf("") }
+        val name= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
 
         Icon(imageVector = Icons.Filled.ArrowBack,
@@ -54,16 +55,37 @@ class SignUpScreen : Screen {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
-            Text(text = "Sign In",
+            Text(text = "Sign Up",
                 fontFamily = FontFamily(Font(resId = R.font.poppins_bold)),
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 30.dp))
 
             Spacer(modifier = Modifier.height(100.dp))
+
+            //Name TextField
+            OutlinedTextField(
+                value =name.value ,
+                onValueChange ={name.value=it},
+                modifier = Modifier
+                    .width(343.dp)
+                    .height(64.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xff6055D8),
+                    unfocusedBorderColor = Color.White,
+                    cursorColor = Color.Black,
+                ),
+                label = { Text(text = "Name",
+                    color = Color(0xff9B9B9B))},
+                textStyle = TextStyle(fontSize = 16.sp,
+                    color = Color.Black),
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
             //Email Address TextField
             OutlinedTextField(
-                value =username.value ,
-                onValueChange ={username.value=it},
+                value =email.value ,
+                onValueChange ={email.value=it},
                 modifier = Modifier
                     .width(343.dp)
                     .height(64.dp),
@@ -72,7 +94,7 @@ class SignUpScreen : Screen {
                     unfocusedBorderColor = Color.White,
                     cursorColor = Color.Black
                 ),
-                label = { Text(text = "Name",
+                label = { Text(text = "Email",
                     color = Color(0xff9B9B9B))},
                 textStyle = TextStyle(fontSize = 16.sp,
                     color = Color.Black),
@@ -126,19 +148,19 @@ class SignUpScreen : Screen {
                     .height(54.dp)
                     .width(335.dp)
             ) {
-                Text(text = "Sign In",
+                Text(text = "Sign Up",
                     fontSize = 18.sp) }
 
 
             Spacer(modifier = Modifier.height(30.dp))
             Row() {
-                Text(text = "Don't have an account?")
+                Text(text = "Already have an account?")
                 Icon(painter = painterResource(id = R.drawable.round_arrow_right_alt),
                     contentDescription =null,
                     modifier = Modifier
                         .size(30.dp)
                         .padding(bottom = 10.dp)
-                        .clickable { navigator.push(SignUpScreen()) },
+                        .clickable { navigator.pop() },
                     tint = Color(0xff6055D8))
             }
             Spacer(modifier = Modifier.height(300.dp))
