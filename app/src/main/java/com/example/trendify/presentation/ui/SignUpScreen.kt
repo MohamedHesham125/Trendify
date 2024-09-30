@@ -44,6 +44,11 @@ class SignUpScreen : Screen {
 
     @Composable
     fun signupscreen(){
+<<<<<<< Updated upstream
+=======
+        val name= remember { mutableStateOf("") }
+        val phone= remember { mutableStateOf("") }
+>>>>>>> Stashed changes
         val email= remember { mutableStateOf("") }
         val password= remember { mutableStateOf("") }
         val name= remember { mutableStateOf("") }
@@ -60,7 +65,11 @@ class SignUpScreen : Screen {
                 fontSize = 20.sp,
                 modifier = Modifier.padding(bottom = 30.dp))
 
+<<<<<<< Updated upstream
             Spacer(modifier = Modifier.height(100.dp))
+=======
+            Spacer(modifier = Modifier.height(70.dp))
+>>>>>>> Stashed changes
 
             //Name TextField
             OutlinedTextField(
@@ -81,6 +90,27 @@ class SignUpScreen : Screen {
             )
 
             Spacer(modifier = Modifier.height(30.dp))
+
+            //Phone Number TextField
+            OutlinedTextField(
+                value =phone.value ,
+                onValueChange ={phone.value=it},
+                modifier = Modifier
+                    .width(343.dp)
+                    .height(64.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xff6055D8),
+                    unfocusedBorderColor = Color.White,
+                    cursorColor = Color.Black,
+                ),
+                label = { Text(text = "Phone Number",
+                    color = Color(0xff9B9B9B))},
+                textStyle = TextStyle(fontSize = 16.sp,
+                    color = Color.Black),
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
 
             //Email Address TextField
             OutlinedTextField(
