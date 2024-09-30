@@ -54,7 +54,8 @@ class SignUpScreen : Screen {
 
         Icon(imageVector = Icons.Filled.ArrowBack,
             contentDescription =null,
-            modifier = Modifier.padding(top = 8.dp, start = 8.dp).clickable { navigator.push(SignUpScreen()) } )
+            modifier = Modifier.padding(top = 8.dp, start = 8.dp)
+                .clickable { navigator.pop() } )
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
@@ -167,7 +168,7 @@ class SignUpScreen : Screen {
                     contentDescription =null,
                     modifier = Modifier
                         .size(30.dp)
-                        .padding(bottom = 15.dp)
+                        .padding(bottom = 10.dp)
                         .clickable { navigator.pop() },
                     tint = Color(0xff6055D8))
             }
