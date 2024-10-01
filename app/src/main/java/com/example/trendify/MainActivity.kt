@@ -18,7 +18,7 @@ import com.example.trendify.ui.theme.TrendifyTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContent {
             TrendifyTheme {
                 Navigator(LoginSceen())

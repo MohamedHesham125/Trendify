@@ -1,26 +1,23 @@
 package com.example.trendify.presentation.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -31,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -49,134 +47,105 @@ class LoginSceen : Screen {
 
     @Composable
     fun loginscreen(){
-        val username= remember { mutableStateOf("") }
+        val email= remember { mutableStateOf("") }
         val password= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
 
-
+Icon(imageVector = Icons.Filled.ArrowBack,
+    contentDescription =null,
+    modifier = Modifier.padding(top = 8.dp, start = 8.dp).clickable { navigator.push(SignUpScreen()) } )
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
-            Row {
-                IconButton(onClick = {null}) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
-                }
-                Text(
-                    text = "Sign In",
-                    fontSize = 28.sp,
-                    modifier = Modifier.padding(top = 50.dp)
-                )
-            }
-
-
-
-
+        Text(text = "Sign In",
+            fontFamily = FontFamily(Font(resId = R.font.poppins_bold)),
+            fontSize = 20.sp,
+            modifier = Modifier.padding(bottom = 30.dp))
+            
+            Spacer(modifier = Modifier.height(100.dp))
             //Email Address TextField
-            Text(text = "Email Address", modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 25.dp),
-                fontSize = 16.sp,
-            )
-
-            Box(modifier = Modifier.fillMaxWidth()){
                 OutlinedTextField(
-                    value =username.value ,
-                    onValueChange ={username.value=it},
+                    value =email.value ,
+                    onValueChange ={email.value=it},
                     modifier = Modifier
                         .width(343.dp)
-                        .height(64.dp)
-                        .padding(start = 16.dp, end = 16.dp, top = 231.dp, bottom = 8.dp),
+                        .height(64.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xff5B9EE1),
-                        unfocusedBorderColor = Color.Gray,
+                        focusedBorderColor = Color(0xff6055D8),
+                        unfocusedBorderColor = Color.White,
+                        cursorColor = Color.Black
                     ),
-                    placeholder = { Text(text = "username")}
+                    label = { Text(text = "Email",
+                        color = Color(0xff9B9B9B))},
+                    textStyle = TextStyle(fontSize = 16.sp,
+                        color = Color.Black),
                 )
-            }
             Spacer(modifier = Modifier.height(30.dp))
 
-
-
             //Password TextField
-            Box(modifier = Modifier.fillMaxWidth()){
                 OutlinedTextField(
                     value =password.value ,
                     onValueChange ={password.value=it},
                     modifier = Modifier
                         .width(343.dp)
-                        .height(64.dp)
-                        .padding(start = 16.dp, end = 16.dp, top = 231.dp, bottom = 8.dp),
+                        .height(64.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xff5B9EE1),
-                        unfocusedBorderColor = Color.Gray,
-                    )
+                        focusedBorderColor = Color(0xff6055D8),
+                        unfocusedBorderColor = Color.White,
+                        cursorColor = Color.Black,
+                    ),
+                    label = { Text(text = "Password",
+                        color = Color(0xff9B9B9B))},
+                    textStyle = TextStyle(fontSize = 16.sp,
+                        color = Color.Black),
                 )
-            }
 
+            Spacer(modifier = Modifier.height(27.dp))
+
+            //Recovery Password
+            Row(horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.align(alignment = Alignment.End)) {
+                Text(text = "Forget Password",
+                    modifier = Modifier,
+                    color = Color(0xff707B81),
+                    fontFamily = FontFamily(Font(resId = R.font.poppins_light)),
+                )
+                    Icon(painter = painterResource(id = R.drawable.round_arrow_right_alt),
+                        tint = Color(0xff6055D8),
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp).clickable { /*TODO*/ })
+            }
             Spacer(modifier = Modifier.height(30.dp))
 
 
 
-            //Recovery Password
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)) {
-                Text(text = "Recovery Password",
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .clickable { navigator.push(ForgetPasswordScreen()) },
-                    color = Color(0xff707B81),
-                    fontFamily = FontFamily(Font(resId = R.font.airbnbcereal_w_bk)),
-                )
-            }
-
-            //Sign In
-            Button(onClick = { navigator.push(SignUpScreen()) },
+            //Sign In Button
+            Button(onClick = { /*TODO*/ },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xff5B9EE1),
+                    containerColor = Color(0xff6055D8),
                     contentColor = Color.White),
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .height(54.dp)
                     .width(335.dp)
-            )
-            {
+            ) {
                 Text(text = "Sign In",
-                    fontSize = 18.sp)
-            }
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(onClick = { navigator.push(SignUpScreen()) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black),
-                shape = RoundedCornerShape(50.dp),
-                modifier = Modifier
-                    .height(54.dp)
-                    .width(335.dp)
+                    fontSize = 18.sp) }
 
-            )
-            {
-                Image(painter = painterResource(id = R.drawable.google),
+            //don't have an account Button
+            Spacer(modifier = Modifier.height(30.dp))
+            Row() {
+                Text(text = "Don't have an account?")
+                Icon(painter = painterResource(id = R.drawable.round_arrow_right_alt),
                     contentDescription =null,
                     modifier = Modifier
-                        .size(28.dp)
-                        .padding(end = 5.dp))
-                Text(
-                    text = "Sign In With Google",
-                    fontSize = 18.sp,
-                )
-
-            }
-            Spacer(modifier = Modifier.height(200.dp))
-
-            Row {
-                Text(text = "Don't have an account?")
-                Spacer(modifier = Modifier.width(5.dp))
-                Text(text = "Signup Free",
-                    modifier = Modifier
+                        .size(30.dp)
                         .padding(bottom = 10.dp)
-                        .clickable { navigator.push(SignUpScreen()) })
+                        .clickable { navigator.push(SignUpScreen()) },
+                    tint = Color(0xff6055D8))
             }
+        Spacer(modifier = Modifier.height(300.dp))
         }
     }
 }
