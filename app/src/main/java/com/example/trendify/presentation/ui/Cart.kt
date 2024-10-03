@@ -98,7 +98,7 @@ fun CartScreen(products: List<proudcts> , navigator: Navigator) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { navigator.push(Checkout()) },
+                    onClick = { navigator.push(/* TODO: Handle more options */) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
