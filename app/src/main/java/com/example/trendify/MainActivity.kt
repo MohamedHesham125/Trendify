@@ -12,8 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cafe.adriel.voyager.navigator.Navigator
+import com.example.trendify.presentation.ui.Cart
+import com.example.trendify.presentation.ui.HomeScreen
 import com.example.trendify.presentation.ui.LoginSceen
+import com.example.trendify.presentation.ui.RegisterScreen
 import com.example.trendify.ui.theme.TrendifyTheme
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +27,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrendifyTheme {
-                Navigator(LoginSceen())
+                Navigator(screen = LoginSceen())
             }
         }
     }
