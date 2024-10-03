@@ -22,7 +22,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-<<<<<<< HEAD
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,52 +34,25 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.trendify.R
-=======
-import cafe.adriel.voyager.core.screen.Screen
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.trendify.presentation.viewmodel.LoginViewModel
->>>>>>> cartandcheckout
 
 class LoginSceen : Screen {
     @Composable
     override fun Content() {
-<<<<<<< HEAD
         loginscreen()
-=======
-            val viewModel: LoginViewModel = hiltViewModel()
-             val LoginResponse = viewModel.loginResponse.collectAsState()
-        val navigator = LocalNavigator.currentOrThrow
-
-        LoginScreen(onLoginClick =  { email, password ->
-            viewModel.login(email = email, password = password, onLoginSuccess = {
-                navigator.push(HomeScreen())
-
-            })
-        })
-
-
->>>>>>> cartandcheckout
     }
 
-
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-<<<<<<< HEAD
     fun loginscreen(){
+        val viewModel: LoginViewModel = hiltViewModel()
+        val LoginResponse = viewModel.loginResponse.collectAsState()
+
+        
         val email= remember { mutableStateOf("") }
         val password= remember { mutableStateOf("") }
         val navigator= LocalNavigator.currentOrThrow
@@ -94,7 +67,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
             fontFamily = FontFamily(Font(resId = R.font.poppins_bold)),
             fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 30.dp))
-            
+
             Spacer(modifier = Modifier.height(100.dp))
             //Email Address TextField
                 OutlinedTextField(
@@ -181,60 +154,6 @@ Icon(imageVector = Icons.Filled.ArrowBack,
                     tint = Color(0xff6055D8))
             }
         Spacer(modifier = Modifier.height(300.dp))
-=======
-    fun LoginScreen(onLoginClick:(String, String)->Unit) {
-        var email by remember { mutableStateOf(TextFieldValue()) }
-        var password by remember { mutableStateOf(TextFieldValue()) }
-        var UserClicked by remember { mutableStateOf(false) }
-
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Login") }
-                )
-            }
-        ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                TextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text("Email") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                TextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("Password") },
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    onClick ={
-                        onLoginClick(email.text, password.text)
-                        UserClicked = true
-                    }
-
-
-
-                ) {
-                    Text("Login")
-                }
-            }
->>>>>>> cartandcheckout
         }
     }
 }
