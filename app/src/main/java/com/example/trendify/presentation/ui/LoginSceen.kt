@@ -84,7 +84,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
 
             //Password TextField
                 OutlinedTextField(
-                    value =password.value ,
+                    value =password.value,
                     onValueChange ={password.value=it},
                     modifier = Modifier
                         .width(343.dp)
