@@ -123,7 +123,7 @@ Icon(imageVector = Icons.Filled.ArrowBack,
 
 
             //Sign In Button
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { navigator.push(HomeScreen()) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xff6055D8),
                     contentColor = Color.White),
