@@ -27,7 +27,7 @@ interface ApiServices {
     suspend fun getHome():Response<Home>
     @GET("categories")
     suspend fun getCategory(): Response<CategoryResponse>
-    @GET("products?category_id=1")
+    @GET("products")
     suspend fun categoryProducts(@Query("category_id") category_id:String ): Response<CategoryProductsResponse>
     @GET("products/{id}")
     suspend fun getProductById(@Path("id")id:Int): Response<proudcts>
