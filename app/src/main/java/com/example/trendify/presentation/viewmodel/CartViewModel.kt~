@@ -21,10 +21,7 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
     fun getCarts() {
         viewModelScope.launch {
             val response = apiServices.getCarts()
-            if (response.isSuccessful) {
-                _cartResponse.value = response.body()
-            }
-
+            _cartResponse.value = response.body()
         }
     }
 }
