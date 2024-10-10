@@ -36,6 +36,6 @@ interface ApiServices {
     @GET("Carts/GetCarts")
     suspend fun getCarts():Response<GetCartsResponse>
 
-    @POST("Favorites/addorremovecartwithproductid")
+    @POST("Carts/addorremovecartwithproductid")
     suspend fun addOrDeleteCart(@Body request: AddOrDeleteCartRequest):Response<AddOrDeleteCartResponse>
 }
