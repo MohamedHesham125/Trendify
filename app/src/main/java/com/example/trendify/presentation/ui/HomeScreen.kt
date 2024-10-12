@@ -153,7 +153,7 @@ fun HomeProductCard(products: Product) {
     ) {
         Row(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
-                model = products.image ?: "",
+                model = products.image,
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
@@ -161,7 +161,7 @@ fun HomeProductCard(products: Product) {
             )
             Column {
                 Text(
-                    text = products.name ?: "No Title",
+                    text = products.name,
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(
@@ -191,17 +191,17 @@ fun BannerCard(banners: Banner) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
-                model = banners.image ?: "",
+                model = banners.image,
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth().size(100.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = banners.product.toString() ?: "No Title",
+                text = banners.product.toString(),
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = banners.category.toString() ?: "No Category",
+                text = banners.category.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray
             )
