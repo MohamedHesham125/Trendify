@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.template.interceptor.AuthInterceptor
 import com.example.trendify.data.model.AddOrDeleteCartRequest
+import com.example.trendify.data.model.AddOrDeleteCartResponse
 import com.example.trendify.data.model.GetCartsResponse
 import com.example.trendify.data.networking.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,10 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
     val cartResponse: StateFlow<GetCartsResponse?> get() = _getcartResponse
 
 
+    private val _AddOrDeleteCartResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
+    val AddOrDeleteCartResponse: StateFlow<AddOrDeleteCartResponse?> get() = _AddOrDeleteCartResponse
+
+    
     fun getCarts() {
         viewModelScope.launch {
             val response = apiServices.getCarts()
@@ -31,7 +36,7 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
         viewModelScope.launch {
             val response = apiServices.addOrDeleteCart(request)
             if (response.isSuccessful) {
-                _getcartResponse.value = response.body()
+                _AddOrDeleteCartResponse.value = response.body()
             }
 
         }
