@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -32,9 +33,13 @@ object NetworkModule {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
+            .connectTimeout(0, java.util.concurrent.TimeUnit.MILLISECONDS)
+            .readTimeout(0, java.util.concurrent.TimeUnit.MILLISECONDS)
+            .writeTimeout(0, java.util.concurrent.TimeUnit.MILLISECONDS)
             .build()
 
         authInterceptor.setToken("")
+
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://student.valuxapps.com/api/")

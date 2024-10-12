@@ -13,19 +13,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
-
 @HiltViewModel
 
- class HomeViewModel @Inject constructor(val  apiServices: ApiServices , val authInterceptor: AuthInterceptor):ViewModel() {
+class HomeViewModel @Inject constructor(val  apiServices: ApiServices , val authInterceptor: AuthInterceptor):ViewModel() {
 
     private val _HomeResponse = MutableStateFlow<Home?>(null)
-    val HomeResponse: StateFlow<Home?> get() = _HomeResponse
+    val HomeResponse : StateFlow<Home?>get() = _HomeResponse
 
     init {
         getHome()
     }
-
     fun getHome() {
         viewModelScope.launch {
             val response = apiServices.getHome()
@@ -33,8 +30,7 @@ class HomeViewModel : ViewModel() {
                 _HomeResponse.value = response.body()
             }
 
+
         }
     }
-
-}
 }
