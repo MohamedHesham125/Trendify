@@ -29,7 +29,7 @@ interface ApiServices {
     @POST("User/Login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    @GET("Home/Gethomedata")
+    @GET("home")
     suspend fun getHome():Response<Home>
     @GET("categories")
     suspend fun getCategory(): Response<CategoryResponse>
@@ -38,16 +38,16 @@ interface ApiServices {
     @GET("products/{id}")
     suspend fun getProductById(@Path("id")id:Int): Response<proudcts>
 
-    @GET("Favorites/GetFavorites")
+    @GET("favorites")
     suspend fun getFavorites():Response<GetFavoritesResponse>
 
-    @POST("Favorites/addordeletefavoritewithproductid")
+    @POST("favorites")
     suspend fun addOrDeleteFavorite(@Body request: AddOrDeleteFavRequest):Response<AddOrDeleteFavResponse>
 
-    @GET("Carts/GetCarts")
+    @GET("carts")
     suspend fun getCarts():Response<GetCartsResponse>
 
-    @POST("Carts/addorremovecartwithproductid")
+    @POST("carts")
     suspend fun addOrDeleteCart(@Body request: AddOrDeleteCartRequest):Response<AddOrDeleteCartResponse>
 
 
