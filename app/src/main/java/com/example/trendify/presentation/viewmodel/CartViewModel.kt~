@@ -37,8 +37,9 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
             val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
             if (response.isSuccessful) {
                 _AddOrDeleteCartResponse.value = response.body()
-                onCheckOutSuccess()
+                oncheckoutsucscess()
             }
+
         }
     }
 }
