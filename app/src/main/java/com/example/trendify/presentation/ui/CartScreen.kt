@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
 import coil.compose.AsyncImage
 import com.example.trendify.data.model.Product
+import com.example.trendify.data.model.ProductXXXX
 import com.example.trendify.presentation.viewmodel.CartViewModel
 import com.example.trendify.presentation.viewmodel.HomeViewModel
 
@@ -43,8 +44,6 @@ class CartScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel: CartViewModel = hiltViewModel()
-        val viewModel2:HomeViewModel = hiltViewModel()
-        val products= viewModel2.HomeResponse.collectAsState()
         val cartResponse = viewModel.cartResponse.collectAsState()
 
         Scaffold(
@@ -63,13 +62,13 @@ class CartScreen : Screen {
             Column(modifier = Modifier.padding(paddingValues)) {
 
                 // LazyColumn for Cart Products
-                cartResponse.value?.data?.cart_items?.let { products ->
-                    if (products.isNotEmpty()) {
+                cartResponse.value?.data?.cart_items?.let {
+                    if (ProductXXXX.isNotEmpty()) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(products) { product ->
-                                CartProductCard(product = product, viewModel)
+                            items(ProductXXXX) { products ->
+                                CartProductCard(product = products, viewModel)
                             }
                         }
 
@@ -127,6 +126,10 @@ fun CartProductCard(product: Product, viewModel: CartViewModel) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = product.name ?: "No Title",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = product.image ?: "No Title",
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(
