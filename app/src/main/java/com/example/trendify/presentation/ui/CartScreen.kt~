@@ -44,7 +44,7 @@ class CartScreen : Screen {
     override fun Content() {
         val viewModel: CartViewModel = hiltViewModel()
         val viewModel2:HomeViewModel = hiltViewModel()
-        val products= viewModel2.HomeResponse.collectAsState()
+        val products= viewModel2.
         val cartResponse = viewModel.cartResponse.collectAsState()
 
         Scaffold(
