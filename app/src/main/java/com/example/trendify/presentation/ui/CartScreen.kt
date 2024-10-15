@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -34,16 +35,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
 import coil.compose.AsyncImage
-import com.example.trendify.data.model.Product
-import com.example.trendify.data.model.ProductXXXX
+import com.example.trendify.data.model.CartItem
 import com.example.trendify.presentation.viewmodel.CartViewModel
-import com.example.trendify.presentation.viewmodel.HomeViewModel
 
 class CartScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val viewModel: CartViewModel = hiltViewModel()
+        val addOrDeleteCartResponse = viewModel.AddOrDeleteCartResponse.collectAsState()
         val cartResponse = viewModel.cartResponse.collectAsState()
 
         Scaffold(
@@ -62,104 +62,92 @@ class CartScreen : Screen {
             Column(modifier = Modifier.padding(paddingValues)) {
 
                 // LazyColumn for Cart Products
-                cartResponse.value?.data?.cart_items?.let {
-                    if (ProductXXXX.isNotEmpty()) {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            items(ProductXXXX) { products ->
-                                CartProductCard(product = products, viewModel)
-                            }
+                cartResponse.value?.data?.cart_items?.let { cartItems ->
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(cartItems) { cartItem ->
+                            CartProductCard(product = cartItem)
                         }
-
-                        // Proceed to Checkout Button
-                        Button(
-                            onClick = { /* Handle checkout action */ },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                        ) {
-                            Text("Proceed to Checkout")
-                        }
-
-                    } else {
-                        // Empty Cart Message
-                        emptyCartMessage()
                     }
                 } ?: run {
-                    // Handle loading state if necessary
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = "Loading cart items...")
-                    }
+                    // Handle empty or loading state if necessary
+                    emptyCartMessage()
+                }
+
+                // Proceed to Checkout Button
+                Button(
+                    onClick = { /* Handle checkout action */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text("Proceed to Checkout")
                 }
             }
         }
     }
-}
 
-@Composable
-fun CartProductCard(product: Product, viewModel: CartViewModel) {
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        elevation = CardDefaults.cardElevation(8.dp)
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+    @Composable
+    fun CartProductCard(product: CartItem) {
+        Card(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            shape = MaterialTheme.shapes.large,
+            elevation = CardDefaults.cardElevation(8.dp)
         ) {
-            AsyncImage(
-                model = product.image ?: "",
-                contentDescription = null,
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(end = 16.dp)
-            )
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(
+                    model = product.product.image ?: "",
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(end = 16.dp)
+                )
 
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = product.name ?: "No Title",
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Text(
-                    text = product.image ?: "No Title",
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Text(
-                    text = "Price: ${product.price}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF4CAF50) // Green color for price
-                )
-                Text(
-                    text = "Quantity: ${product.old_price}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = product.product.name ?: "No Title",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        text = "Price: ${product.product.price.toString()}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFF4CAF50) // Green color for price
+                    )
+                    Text(
+                        text = "Old Price: ${product.product.price.toString()}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray
+                    )
+                }
+
+                // Delete Icon Button
+                IconButton(onClick = { /* Handle delete action */ }) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete")
+                }
             }
         }
     }
-}
 
-@Composable
-fun emptyCartMessage() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+    @Composable
+    fun emptyCartMessage() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Text(text = "Your cart is empty", style = MaterialTheme.typography.titleLarge)
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Start adding products to your cart!")
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Your cart is empty", style = MaterialTheme.typography.titleLarge)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Start adding products to your cart!")
+            }
         }
     }
 }

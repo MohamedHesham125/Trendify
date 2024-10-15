@@ -1,0 +1,27 @@
+package com.example.trendify.data.model
+
+data class ProductXXXX(
+    val description: String,
+    val discount: Int,
+    val id: Int,
+    val image: String,
+    val images: List<String>,
+    val in_cart: Boolean,
+    val in_favorites: Boolean,
+    val name: String,
+    val old_price: Int,
+    val price: Int
+)
+val proudct= listOf(
+    ProductXXXX(
+    description = "produc1",
+    discount = 0,
+    id = 0,
+    image = "",
+    images = emptyList(),
+    in_cart = true,
+    in_favorites = false,
+    name = "",
+    old_price = 0,
+    price = 0)
+)
