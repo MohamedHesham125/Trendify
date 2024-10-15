@@ -15,6 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInterceptor: AuthInterceptor)  : ViewModel() {
+
     private val _getcartResponse = MutableStateFlow<GetCartsResponse?>(null)
     val cartResponse: StateFlow<GetCartsResponse?> get() = _getcartResponse
 
@@ -31,13 +32,13 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
             }
         }
     }
-    fun addOrDeleteCart(request: AddOrDeleteCartRequest,) {
+    fun addOrDeleteCart(prdId: Int, onCheckOutSuccess:()->Unit) {
         viewModelScope.launch {
-            val response = apiServices.addOrDeleteCart(request)
+            val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
             if (response.isSuccessful) {
                 _AddOrDeleteCartResponse.value = response.body()
+                onCheckOutSuccess()
             }
-
         }
     }
 }
