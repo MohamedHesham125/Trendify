@@ -73,7 +73,7 @@ class LoginSceen : Screen {
 
             {
 
-                Image(painter = painterResource(id = com.example.trendify.R.drawable.login) , contentDescription = "login image",modifier = Modifier.size(300.dp))
+                Image(painter = painterResource(id = com.example.trendify.R.drawable.login2) , contentDescription = "login image",modifier = Modifier.size(300.dp))
 
                 Spacer(modifier = Modifier.height(20.dp))
 
