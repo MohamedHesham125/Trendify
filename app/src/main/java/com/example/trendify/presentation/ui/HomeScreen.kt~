@@ -41,6 +41,7 @@ class HomeScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val viewModel: HomeViewModel = hiltViewModel()
         val homeResponse = viewModel.HomeResponse.collectAsState()
         var searchQuery by remember { mutableStateOf("") }
@@ -198,7 +199,6 @@ fun CategoryItem(name: String) {
 
 @Composable
 fun BottomNavigationBar() {
-    val navigator = LocalNavigator.currentOrThrow
     NavigationBar(
         containerColor = Color.White
     ) {
@@ -220,7 +220,7 @@ fun BottomNavigationBar() {
         NavigationBarItem(
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") },
             selected = false,
-            onClick = { navigator.push(CartScreen()) }
+            onClick = {  }
         )
     }
 }
