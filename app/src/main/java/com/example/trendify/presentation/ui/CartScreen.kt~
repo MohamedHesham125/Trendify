@@ -50,7 +50,7 @@ class CartScreen : Screen {
         val viewModel: CartViewModel = hiltViewModel()
         val addOrDeleteCartResponse = viewModel.AddOrDeleteCartResponse.collectAsState()
         val cartResponse = viewModel.cartResponse.collectAsState()
-        var showthanksMessage by remember { mutableStateOf(false) }
+        var showthanksMessage by remember { mutableStateOf(true) }
 
         Scaffold(
             topBar = {
@@ -83,7 +83,7 @@ class CartScreen : Screen {
 
                 // Proceed to Checkout Button
                 Button(
-                    onClick = { showthanksMessage = true },
+                    onClick = {  },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)

@@ -32,12 +32,12 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
             }
         }
     }
-    fun addOrDeleteCart(prdId: Int, onCheckOutSuccess:()->Unit) {
+    fun addOrDeleteCart(prdId: Int) {
         viewModelScope.launch {
             val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
             if (response.isSuccessful) {
                 _AddOrDeleteCartResponse.value = response.body()
-                onCheckOutSuccess()
+
             }
         }
     }
