@@ -20,8 +20,11 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
     val cartResponse: StateFlow<GetCartsResponse?> get() = _getcartResponse
 
 
-    private val _AddOrDeleteCartResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
-    val AddOrDeleteCartResponse: StateFlow<AddOrDeleteCartResponse?> get() = _AddOrDeleteCartResponse
+    private val _DeleteCartResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
+    val DeleteCartResponse: StateFlow<AddOrDeleteCartResponse?> get() = _DeleteCartResponse
+
+    private val _AddCartResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
+    val AddCartResponse: StateFlow<AddOrDeleteCartResponse?> get() = _AddCartResponse
 
 
     fun getCarts() {
@@ -32,11 +35,21 @@ class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInt
             }
         }
     }
-    fun addOrDeleteCart(prdId: Int) {
+    fun addtoCart(prdId: Int,onaddsucsses:()->Unit) {
         viewModelScope.launch {
             val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
             if (response.isSuccessful) {
-                _AddOrDeleteCartResponse.value = response.body()
+                _AddCartResponse.value = response.body()
+                onaddsucsses()
+            }
+        }
+    }
+
+    fun DeleteCart(prdId: Int,) {
+        viewModelScope.launch {
+            val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
+            if (response.isSuccessful) {
+                _DeleteCartResponse.value = response.body()
 
             }
         }

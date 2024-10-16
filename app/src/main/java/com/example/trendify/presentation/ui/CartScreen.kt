@@ -39,6 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
 import com.example.trendify.data.model.CartItem
 import com.example.trendify.presentation.viewmodel.CartViewModel
@@ -48,16 +50,16 @@ class CartScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel: CartViewModel = hiltViewModel()
-        val addOrDeleteCartResponse = viewModel.AddOrDeleteCartResponse.collectAsState()
         val cartResponse = viewModel.cartResponse.collectAsState()
         var showthanksMessage by remember { mutableStateOf(false) }
+        val navigator = LocalNavigator.currentOrThrow
 
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = { Text("Your Cart") },
                     navigationIcon = {
-                        IconButton(onClick = { /* Handle back navigation */ }) {
+                        IconButton(onClick = {navigator.push(HomeScreen())}) {
                             Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                         }
                     },
@@ -105,7 +107,6 @@ class CartScreen : Screen {
     @Composable
     fun CartProductCard(product: CartItem) {
         val viewModel: CartViewModel = hiltViewModel()
-        val addOrDeleteCartResponse = viewModel.AddOrDeleteCartResponse.collectAsState()
         Card(
             modifier = Modifier
                 .padding(16.dp)
@@ -145,7 +146,7 @@ class CartScreen : Screen {
                 // Delete Icon Button
                 IconButton(onClick = {
                     product.id.let { id ->
-                        viewModel.addOrDeleteCart(id)
+                        viewModel.DeleteCart(id)
                     }
                 }) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
