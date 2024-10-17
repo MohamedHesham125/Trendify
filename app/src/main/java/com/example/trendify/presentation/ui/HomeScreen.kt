@@ -210,7 +210,7 @@ fun BottomNavigationBar() {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
             selected = false,
-            onClick = { /* Handle favorites click */ }
+            onClick = { navigator.push(FavoriteScreen()) }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
