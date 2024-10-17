@@ -187,7 +187,7 @@ fun CategoryItem(name: String) {
             .padding(8.dp)
             .width(64.dp)
     ) {
-        Image(painter = painterResource(id = R.drawable.baseline_games_24), contentDescription ="baseline_games " , modifier = Modifier.padding(16.dp) , colorFilter = ColorFilter.tint(Color(
+        Image(painter = painterResource(id = R.drawable.camera), contentDescription ="baseline_games " , modifier = Modifier.padding(16.dp) , colorFilter = ColorFilter.tint(Color(
             0xFFFF9800
         )
         ))
