@@ -24,9 +24,9 @@ import retrofit2.http.Query
 interface ApiServices {
 
     //implementation network function
-    @POST("User/Register")
+    @POST("register")
     suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
-    @POST("User/Login")
+    @POST("login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
     @GET("home")
