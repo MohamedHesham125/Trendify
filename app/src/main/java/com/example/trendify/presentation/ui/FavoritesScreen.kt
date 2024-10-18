@@ -33,8 +33,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
 import com.example.trendify.data.model.DataXXXX
+import com.example.trendify.data.model.DataXXXXX
+import com.example.trendify.data.model.DataXXXXXX
+import com.example.trendify.data.model.Favorite
 import com.example.trendify.presentation.viewmodel.FavoritesViewModel
 
 class FavoriteScreen : Screen {
@@ -43,13 +48,13 @@ class FavoriteScreen : Screen {
     override fun Content() {
         val viewModel: FavoritesViewModel = hiltViewModel()
         val favoriteResponse = viewModel.favoritesResponse.collectAsState()
-
+        val navigator = LocalNavigator.currentOrThrow
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = { Text("Your Favorites") },
                     navigationIcon = {
-                        IconButton(onClick = { /* Handle back navigation */ }) {
+                        IconButton(onClick = { navigator.pop() }) {
                             Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                         }
                     },
@@ -61,23 +66,29 @@ class FavoriteScreen : Screen {
 
                 // LazyColumn for Favorite Products
                 favoriteResponse.value?.data?.data?.let { favoritesItems ->
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        items(favoritesItems) { favoriteItem -> // Use favoritesItems here
-                            FavoriteProductCard(product = favoriteItem)
+                    val filteredFavorites = favoritesItems.filter { it.in_favorites }
+
+                    if (filteredFavorites.isNotEmpty()) {
+                        println("state is good: $filteredFavorites")
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(filteredFavorites) { favoriteItem ->
+                                FavoriteProductCard(product = favoriteItem)
+                            }
                         }
+                    } else {
+                        println("state is bad: $filteredFavorites")
+                        emptyFavoriteMessage() // Show message if no items are in favorites
                     }
-                } ?: run {
-                    // Handle empty or loading state if necessary
-                    emptyFavoriteMessage()
                 }
             }
         }
     }
 
     @Composable
-    fun FavoriteProductCard(product: DataXXXX) { // Correct the typo here
+    fun FavoriteProductCard(product: DataXXXXXX) {
+        // Correct the typo here
         Card(
             modifier = Modifier
                 .padding(16.dp)
@@ -90,7 +101,7 @@ class FavoriteScreen : Screen {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                    model = product.product.image ?: "",
+                    model = product.image,
                     contentDescription = null,
                     modifier = Modifier
                         .size(80.dp)
@@ -99,16 +110,16 @@ class FavoriteScreen : Screen {
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = product.product.name ?: "No Title",
+                        text = product.name,
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text(
-                        text = "Price: ${product.product.price}",
+                        text = "Price: ${product.price}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF4CAF50) // Green color for price
                     )
                     Text(
-                        text = "Old Price: ${product.product.old_price}",
+                        text = "Old Price: ${product.old_price}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Gray
                     )

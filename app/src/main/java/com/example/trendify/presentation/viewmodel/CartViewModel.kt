@@ -13,45 +13,40 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+
+
+
+
 @HiltViewModel
 class CartViewModel @Inject constructor(val apiServices: ApiServices,val authInterceptor: AuthInterceptor)  : ViewModel() {
 
-    private val _getcartResponse = MutableStateFlow<GetCartsResponse?>(null)
-    val cartResponse: StateFlow<GetCartsResponse?> get() = _getcartResponse
+    private val _getCartResponse = MutableStateFlow<GetCartsResponse?>(null)
+    val getCartResponse: StateFlow<GetCartsResponse?> get() = _getCartResponse
 
 
-    private val _DeleteCartResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
-    val DeleteCartResponse: StateFlow<AddOrDeleteCartResponse?> get() = _DeleteCartResponse
+    private val _AddOrDeleteCartsResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
+    val AddOrDeleteCartsResponse: StateFlow<AddOrDeleteCartResponse?> get() = _AddOrDeleteCartsResponse
 
-    private val _AddCartResponse = MutableStateFlow<AddOrDeleteCartResponse?>(null)
-    val AddCartResponse: StateFlow<AddOrDeleteCartResponse?> get() = _AddCartResponse
+
+
 
 
     fun getCarts() {
         viewModelScope.launch {
             val response = apiServices.getCarts()
             if (response.isSuccessful) {
-                _getcartResponse.value = response.body()
+                _getCartResponse.value = response.body()
             }
         }
     }
-    fun addtoCart(prdId: Int,onaddsucsses:()->Unit) {
+    fun addOrDeleteCarts(request: AddOrDeleteCartRequest,) {
         viewModelScope.launch {
-            val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
+            val response = apiServices.addOrDeleteCarts(request)
             if (response.isSuccessful) {
-                _AddCartResponse.value = response.body()
-                onaddsucsses()
+                _AddOrDeleteCartsResponse.value = response.body()
             }
         }
     }
 
-    fun DeleteCart(prdId: Int,) {
-        viewModelScope.launch {
-            val response = apiServices.addOrDeleteCart(AddOrDeleteCartRequest(productId=prdId))
-            if (response.isSuccessful) {
-                _DeleteCartResponse.value = response.body()
-
-            }
-        }
-    }
 }

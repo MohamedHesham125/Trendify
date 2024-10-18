@@ -1,6 +1,6 @@
 package com.example.trendify.presentation.ui
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,26 +16,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
-import com.example.trendify.R
-import com.example.trendify.data.model.Banner
-import com.example.trendify.data.model.Product
+import com.example.market.data.model.Product
+import com.example.trendify.data.model.DataXXXXXX
+import com.example.trendify.presentation.viewmodel.CategoryViewModel
 import com.example.trendify.presentation.viewmodel.HomeViewModel
-import org.w3c.dom.Text
 
 class HomeScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -43,41 +38,81 @@ class HomeScreen : Screen {
     override fun Content() {
         val viewModel: HomeViewModel = hiltViewModel()
         val homeResponse = viewModel.HomeResponse.collectAsState()
+        val categoryViewModel: CategoryViewModel = hiltViewModel()
+        val categories by categoryViewModel.categories.collectAsState(initial = emptyList())
         var searchQuery by remember { mutableStateOf("") }
+
+        LaunchedEffect(Unit) {
+            categoryViewModel.fetchCategories()
+        }
+
 
         Scaffold(
             topBar = {
-                TopBar()
+                CenterAlignedTopAppBar(
+                    title = { Text("Home Screen") },
+                    navigationIcon = {
+                        IconButton(onClick = { /* Handle menu click */ }) {
+                            Icon(Icons.Default.Menu, contentDescription = "Menu")
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { /* Handle settings click */ }) {
+                            Icon(Icons.Default.Settings, contentDescription = "Settings")
+                        }
+                    },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color(0xFFFFA500)) // Orange color
+                )
             },
             bottomBar = {
                 BottomNavigationBar()
             }
         ) { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
+
                 // Search Bar
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
-                    label = { Text("Search product") },
+                    label = { Text("Search Products") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 )
-
-                // Banner Section
-                PromotionalBanner()
-
-                // Categories
-                CategoryRow()
-
-                // Popular Products Section
+                // Categories Label
                 Text(
-                    text = "Popular Product",
-                    modifier = Modifier.padding(16.dp),
-                    style = MaterialTheme.typography.titleMedium
+                    text = "Categories",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
                 )
 
+                // LazyRow for Categories
+                LazyRow(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
+                ) {
+                    items(categories?: emptyList()){categories->
+                        CategoryItem(categories)
+                    }
+                }
+
+                // LazyRow for Banners
+                /*   homeResponse.value?.data?.banners?.let { banners ->
+                       LazyRow(
+                           modifier = Modifier
+                               .fillMaxWidth()
+                               .padding(vertical = 16.dp)
+                       ) {
+                           items(banners) { banner ->
+                               BannerCard(banners = banner)
+                           }
+                       }
+                   }*/
+
                 // LazyColumn for Products
+
                 homeResponse.value?.data?.products?.let { products ->
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
@@ -89,7 +124,7 @@ class HomeScreen : Screen {
                         }
                     }
                 } ?: run {
-                    // Handle empty or loading state
+                    // Handle empty or loading state if necessary
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -99,100 +134,11 @@ class HomeScreen : Screen {
                     ) {
                         Text(text = "No products available")
                         Spacer(modifier = Modifier.height(8.dp))
-                        CircularProgressIndicator()
+                        Text(text = "Loading...")
                     }
                 }
             }
         }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBar() {
-    val navigator = LocalNavigator.currentOrThrow
-    CenterAlignedTopAppBar(
-
-        title = { Text("Home Screen") },
-        navigationIcon = {
-            IconButton(onClick = { /* Handle menu click */ }) {
-                Icon(Icons.Default.Menu, contentDescription = "Menu")
-            }
-        },
-
-        actions = {
-
-            IconButton(onClick = { navigator.push(CartScreen()) }) {
-                Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
-            }
-            IconButton(onClick = { /* Handle notification click */ }) {
-                BadgedBox(
-                    badge = {
-                        Badge {
-                            Text("3") // This represents the notification count
-                        }
-                    }
-                ) {
-                    Icon(Icons.Default.Notifications, contentDescription = "Notifications")
-                }
-            }
-        },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color(0xFFFFA500)) // Orange color
-    )
-}
-
-@Composable
-fun PromotionalBanner() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF6200EA)) // Purple banner
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "A Spring Surprise",
-                style = MaterialTheme.typography.bodyMedium.copy(color = Color.White)
-            )
-            Text(
-                text = "Cashback 25%",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            )
-        }
-    }
-}
-
-@Composable
-fun CategoryRow() {
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(listOf("Flash Deal", "Bill", "Game", "Daily Gift", "More")) { category ->
-            CategoryItem(category)
-        }
-    }
-}
-
-@Composable
-fun CategoryItem(name: String) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(8.dp)
-            .width(64.dp)
-    ) {
-        Image(painter = painterResource(id = R.drawable.camera), contentDescription ="baseline_games " , modifier = Modifier.padding(16.dp) , colorFilter = ColorFilter.tint(Color(
-            0xFFFF9800
-        )
-        ))
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = name, style = MaterialTheme.typography.bodySmall)
     }
 }
 
@@ -200,7 +146,7 @@ fun CategoryItem(name: String) {
 fun BottomNavigationBar() {
     val navigator = LocalNavigator.currentOrThrow
     NavigationBar(
-        containerColor = Color.White
+        containerColor = Color.White // You can set the background color here
     ) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
@@ -218,7 +164,7 @@ fun BottomNavigationBar() {
             onClick = { /* Handle profile click */ }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") },
+            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Payment") },
             selected = false,
             onClick = { navigator.push(CartScreen()) }
         )
@@ -226,12 +172,14 @@ fun BottomNavigationBar() {
 }
 
 @Composable
-fun HomeProductCard(products: Product) {
+fun HomeProductCard(products: DataXXXXXX) {
+    val navigator =  LocalNavigator .currentOrThrow
+
     Column(modifier = Modifier
         .padding(16.dp)
         .fillMaxSize()) {
         Box(modifier = Modifier.fillMaxWidth()){
-            AsyncImage(model = products.image, contentDescription ="Image", modifier = Modifier.fillMaxWidth() , contentScale = ContentScale.FillWidth)
+            AsyncImage( model = products.image, contentDescription ="Image", modifier = Modifier.fillMaxWidth() , contentScale = ContentScale.FillWidth)
 
             Text("Welcome to Trenday",
                 fontSize = 20.sp,
@@ -257,10 +205,12 @@ fun HomeProductCard(products: Product) {
             Spacer(modifier = Modifier.height(22.dp))
             //item
             Column {
-                Box (modifier = Modifier.height(210.dp)){
+                Box (modifier = Modifier.height(210.dp)
+                    .clickable{navigator.push(ProductsScreen(products.id))}){
                     AsyncImage( modifier = Modifier
                         .height(190.dp)
                         .width(150.dp), contentScale = ContentScale.Crop, model = products.image, contentDescription ="Image")
+
                     Button(onClick = {} , enabled = false, colors = ButtonDefaults.buttonColors(disabledContainerColor = Color.Red,containerColor = Color.Red) ,
                         modifier = Modifier
                             .align(Alignment.TopStart)
@@ -281,13 +231,16 @@ fun HomeProductCard(products: Product) {
                             .align(Alignment.BottomEnd)
                             .padding(top = 5.dp)) {
 
-                        IconButton(onClick = { } ) {
-                            Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = Color.Gray)
+                        //add to favorite
+
+                        IconButton(onClick = {products.in_favorites=true } ) {
+                            Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = Color.Red)
 
                         }
                         Spacer(modifier = Modifier.height(15.dp))
                     }
-                    var rating by remember { mutableStateOf(1f) } //default rating will be 1
+
+                    var rating by remember { mutableStateOf(0f) }
                     Row(modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(top = 7.dp) , verticalAlignment = Alignment.CenterVertically) {
@@ -303,6 +256,7 @@ fun HomeProductCard(products: Product) {
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
+
                 Text(text = products.name ,
                     fontSize = 20.sp ,
                     fontFamily = FontFamily.Cursive ,
@@ -321,6 +275,13 @@ fun HomeProductCard(products: Product) {
                     fontSize = 12.sp,
                     color = Color(0xFF4CAF50) // Green color for price
                 )
+
+                //button to add card to cart
+                Button(onClick = {products.in_cart=true}) {
+                    Text(text = "Add To Cart")
+                    Icons.Filled.ShoppingCart
+
+                }
 
             }
         }

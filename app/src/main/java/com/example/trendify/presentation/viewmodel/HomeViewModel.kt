@@ -1,8 +1,6 @@
 package com.example.trendify.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-
-
 import androidx.lifecycle.viewModelScope
 import com.example.template.interceptor.AuthInterceptor
 import com.example.trendify.data.model.Home
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 
-class HomeViewModel @Inject constructor(val  apiServices: ApiServices , val authInterceptor: AuthInterceptor):ViewModel() {
+class HomeViewModel @Inject constructor(val  apiServices: ApiServices, val authInterceptor: AuthInterceptor):ViewModel() {
 
     private val _HomeResponse = MutableStateFlow<Home?>(null)
     val HomeResponse : StateFlow<Home?>get() = _HomeResponse
@@ -23,14 +21,14 @@ class HomeViewModel @Inject constructor(val  apiServices: ApiServices , val auth
     init {
         getHome()
     }
-    fun getHome() {
+    fun getHome(){
         viewModelScope.launch {
             val response = apiServices.getHome()
             if (response.isSuccessful) {
                 _HomeResponse.value = response.body()
             }
 
-
         }
     }
+
 }

@@ -1,9 +1,7 @@
 package com.example.trendify.data.model
 
-import com.example.trendify.data.model.DataXX
-
-data class Home(
-    val `data`: DataXX,
+data class AllProductsResponse(
+    val `data`: DataXXXXXXXXX,
     val message: Any,
     val status: Boolean
 )

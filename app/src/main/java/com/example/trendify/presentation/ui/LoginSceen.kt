@@ -47,8 +47,8 @@ class LoginSceen : Screen {
     fun LoginScreen(onLoginClick:(String, String)->Unit) {
         var email by remember { mutableStateOf(TextFieldValue()) }
         var password by remember { mutableStateOf(TextFieldValue()) }
-        var UserClicked by remember { mutableStateOf(false) }
-        var navigator = LocalNavigator.currentOrThrow
+        var userclicked by remember { mutableStateOf(false) }
+        val navigator = LocalNavigator.currentOrThrow
 
 
         Scaffold(
@@ -107,7 +107,7 @@ class LoginSceen : Screen {
                 Button(
                     onClick ={
                         onLoginClick(email.text, password.text)
-                        UserClicked = true
+                        userclicked = true
                     },
                     modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFA500)

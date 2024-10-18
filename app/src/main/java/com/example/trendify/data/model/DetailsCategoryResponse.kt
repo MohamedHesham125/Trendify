@@ -1,6 +1,8 @@
 package com.example.trendify.data.model
 
-data class CategoryProductsResponse(
+import com.example.trendify.data.model.DataXXXXX
+
+data class DetailsCategoryResponse(
     val `data`: DataXXXXX,
     val message: Any,
     val status: Boolean

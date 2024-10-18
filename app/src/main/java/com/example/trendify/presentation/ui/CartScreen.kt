@@ -42,7 +42,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
+import com.example.trendify.data.model.AddOrDeleteCartRequest
 import com.example.trendify.data.model.CartItem
+import com.example.trendify.data.model.productss
 import com.example.trendify.presentation.viewmodel.CartViewModel
 
 class CartScreen : Screen {
@@ -50,7 +52,7 @@ class CartScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel: CartViewModel = hiltViewModel()
-        val cartResponse = viewModel.cartResponse.collectAsState()
+        val cartResponse = viewModel.getCartResponse.collectAsState()
         var showthanksMessage by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.currentOrThrow
 
@@ -70,7 +72,7 @@ class CartScreen : Screen {
             Column(modifier = Modifier.padding(paddingValues)) {
 
                 // LazyColumn for Cart Products
-                cartResponse.value?.data?.cart_items?.let { cartItems ->
+                cartResponse.value?.data?.data?.let { cartItems ->
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
                     ) {
@@ -105,7 +107,7 @@ class CartScreen : Screen {
     }
 
     @Composable
-    fun CartProductCard(product: CartItem) {
+    fun CartProductCard(product: productss) {
         val viewModel: CartViewModel = hiltViewModel()
         Card(
             modifier = Modifier
@@ -119,7 +121,7 @@ class CartScreen : Screen {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                    model = product.product.image ?: "",
+                    model = product.image ?: "",
                     contentDescription = null,
                     modifier = Modifier
                         .size(80.dp)
@@ -128,16 +130,16 @@ class CartScreen : Screen {
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = product.product.name ?: "No Title",
+                        text = product.name ?: "No Title",
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text(
-                        text = "Price: ${product.product.price.toString()}",
+                        text = "Price: ${product.price}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF4CAF50) // Green color for price
                     )
                     Text(
-                        text = "Old Price: ${product.product.price.toString()}",
+                        text = "Old Price: ${product.price}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.Gray
                     )
@@ -146,7 +148,7 @@ class CartScreen : Screen {
                 // Delete Icon Button
                 IconButton(onClick = {
                     product.id.let { id ->
-                        viewModel.DeleteCart(id)
+                        viewModel.addOrDeleteCarts(AddOrDeleteCartRequest(id))
                     }
                 }) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")

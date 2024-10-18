@@ -32,8 +32,9 @@ class FavoritesViewModel @Inject constructor(val apiServices: ApiServices,val au
     val AddOrDeleteFavoritesResponse: StateFlow<AddOrDeleteFavResponse?> get() = _AddOrDeleteFavoritesResponse
 
 
-
-
+    init {
+        getFavorites()
+    }
 
     fun getFavorites() {
         viewModelScope.launch {
