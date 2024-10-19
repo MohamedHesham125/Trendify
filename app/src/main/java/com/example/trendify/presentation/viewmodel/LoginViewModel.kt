@@ -20,7 +20,7 @@ class LoginViewModel @Inject constructor(val apiServices: ApiServices , val auth
     val loginRespose = _loginRespose
     val loginResponse : StateFlow<LoginResponse?> get() = _loginRespose
 
-     fun login(email: String, password: String , onLoginSuccess:()->Unit) {
+     fun login(email: String, password: String , onLoginSuccess:()->Unit, onLoginFalier:()->Unit) {
        viewModelScope.launch {
            val response = apiServices.login(LoginRequest(email = email, password = password))
           if (response.isSuccessful) {
@@ -28,6 +28,7 @@ class LoginViewModel @Inject constructor(val apiServices: ApiServices , val auth
               authInterceptor.setToken(response.body()?.data?.token?:"")
               response.body()?.data?.token
               onLoginSuccess()
+              onLoginFalier()
 
           }
        }

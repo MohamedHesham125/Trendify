@@ -234,10 +234,8 @@ fun HomeProductCard(products: DataXXXXXX) {
                             .padding(top = 5.dp)) {
 
                         //add to favorite
-
                         IconButton(onClick = {products.in_favorites=true} ) {
-                            Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = Color.Red)
-
+                            Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = Color.Gray)
                         }
                         Spacer(modifier = Modifier.height(15.dp))
                     }

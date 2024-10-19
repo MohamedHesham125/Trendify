@@ -6,7 +6,7 @@ data class DataXXXXXXXX(
     val id: Int,
     val image: String,
     val images: List<String>,
-    val in_cart: Boolean,
+    var in_cart: Boolean,
     val in_favorites: Boolean,
     val name: String,
     val old_price: Int,

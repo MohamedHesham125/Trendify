@@ -1,46 +1,44 @@
 package com.example.trendify.presentation.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import cafe.adriel.voyager.core.screen.Screen
+import com.example.trendify.data.model.DataXXXXXX
 import com.example.trendify.data.model.DataXXXXXXXX
 import com.example.trendify.presentation.viewmodel.ProductsViewModel
 
-class ProductsScreen(private val id: Int):Screen {
+class ProductsScreen(private val id: Int) : Screen {
     @Composable
     override fun Content() {
-
         ProductsScreen(id.toString())
     }
 
-
     @SuppressLint("NotConstructor")
     @Composable
-    fun ProductsScreen( id: String) {
-        // Collect the state of product response and loading indicator
+    fun ProductsScreen(id: String) {
         val viewModel: ProductsViewModel = hiltViewModel()
         val productResponse = viewModel.detailsproductResponse.collectAsState()
+
         LaunchedEffect(Unit) {
             viewModel.getDetailsProducts(id)
         }
-
 
         Column(
             modifier = Modifier
@@ -49,66 +47,104 @@ class ProductsScreen(private val id: Int):Screen {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Products",
+                text = "Product Detail",
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            // Check if products are loading
+            val product = productResponse.value?.data
 
-                val products = productResponse.value?.data
-
-              //  if (products) {
-                 //   Text(
-                    //    text = "No products available.",
-                    //    style = MaterialTheme.typography.bodyLarge
-                   // )
-            //    }
-            //else
-            //{
-                Column {
-                    ProductCard(product = products)
-
-                    }
-                }
+            if (product != null) {
+                ProductCard(product)
+            } else {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
         }
-
-
-    @Composable
-    fun CircularProgressIndicator(modifier: Modifier) {
-        TODO("Not yet implemented")
     }
 
     @Composable
-    fun ProductCard(product: DataXXXXXXXX?) {
-        Card(
+    fun ProductCard(product: DataXXXXXX) {
+        Column(
             modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(4.dp)
+                .padding(16.dp)
+                .background(Color.White, shape = RoundedCornerShape(16.dp))
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Image(
-                    painter = rememberImagePainter(product?.image),
-                    contentDescription = product?.name,
-                    modifier = Modifier
-                        .height(120.dp)
-                        .fillMaxWidth()
+            AsyncImage(
+                model = product.image,
+                contentDescription = "Product Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = product.name,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                ),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Star,
+                    contentDescription = "Rating",
+                    tint = Color(0xFFFFD700) // Gold color for the star
                 )
-                Text(
-                    text = "${product?.name}",
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-                Text(
-                    text = "$${product?.price}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
+                Spacer(modifier = Modifier.width(4.dp))
+                // Text(
+                //   text = "${product.rating} / 5 (${product.reviewCount})",
+                // style = MaterialTheme.typography.bodyMedium
+                //)
+            }
+
+            Text(
+                text = product.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Green,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Text(
+                text = product.description,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = "$${product.price}",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Text(
+                text = "Old Price: $${product.old_price} - Discount: ${product.discount}%",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.Gray
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { product.in_cart = true },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Add to Cart", color = Color.White)
             }
         }
     }
-
-
-
+}
