@@ -4,6 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -20,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -72,22 +76,19 @@ class HomeScreen : Screen {
         ) { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
 
-                // Search Bar
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    label = { Text("Search Products") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
+                // Banner Section
+                homeResponse.value?.data?.banners?.let { banners ->
+                    BannerSection(banners = banners.map { it.image })  // Assuming each banner has an image field
+                }
+
                 // Categories Label
                 Text(
                     text = "Categories",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
-                        .padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+                        .padding(start = 16.dp, top = 5.dp, bottom = 8.dp)
                 )
+
 
                 // LazyRow for Categories
                 LazyRow(
@@ -100,23 +101,17 @@ class HomeScreen : Screen {
                     }
                 }
 
-                // LazyRow for Banners
-                /*   homeResponse.value?.data?.banners?.let { banners ->
-                       LazyRow(
-                           modifier = Modifier
-                               .fillMaxWidth()
-                               .padding(vertical = 16.dp)
-                       ) {
-                           items(banners) { banner ->
-                               BannerCard(banners = banner)
-                           }
-                       }
-                   }*/
+
 
                 // LazyColumn for Products
-
+                Text(
+                    text = "All Products",
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier
+                        .padding(start = 16.dp, top = 8.dp, bottom = 8.dp))
                 homeResponse.value?.data?.products?.let { products ->
-                    LazyColumn(
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(products.filter { product ->
@@ -148,6 +143,7 @@ class HomeScreen : Screen {
 fun BottomNavigationBar(products: List<DataXXXXXX>) {
     val navigator = LocalNavigator.currentOrThrow
     NavigationBar(
+        modifier = Modifier.height(50.dp),
         containerColor = Color.White // You can set the background color here
     ) {
         NavigationBarItem(
@@ -161,11 +157,6 @@ fun BottomNavigationBar(products: List<DataXXXXXX>) {
             onClick = { navigator.push(FavoriteScreen(products)) }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-            selected = false,
-            onClick = { /* Handle profile click */ }
-        )
-        NavigationBarItem(
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Payment") },
             selected = false,
             onClick = { navigator.push(CartScreen(products)) }
@@ -173,44 +164,72 @@ fun BottomNavigationBar(products: List<DataXXXXXX>) {
     }
 }
 
+
+@Composable
+fun ProductGrid(products: List<DataXXXXXX>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Divide products into pairs
+        items(products.chunked(2)) { productPair ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Display the first product
+                HomeProductCard(productPair[0])
+
+                // Check if there's a second product in the pair
+                if (productPair.size > 1) {
+                    HomeProductCard(productPair[1])
+                } else {
+                    // Add an empty space to align the layout properly if odd number of products
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun HomeProductCard(products: DataXXXXXX) {
+    val isFavorite = remember { mutableStateOf(products.in_favorites) }
     val navigator =  LocalNavigator .currentOrThrow
 
     Column(modifier = Modifier
         .padding(16.dp)
         .fillMaxSize()) {
-        Box(modifier = Modifier.fillMaxWidth()){
-            AsyncImage( model = products.image, contentDescription ="Image", modifier = Modifier.fillMaxWidth() , contentScale = ContentScale.FillWidth)
-
-            Text("Welcome to Trenday",
-                fontSize = 20.sp,
-                color = Color.Black,
-                fontFamily = FontFamily.SansSerif,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(start = 16.dp, bottom = 26.dp))
-        }
+//        Box(modifier = Modifier.fillMaxWidth()){
+//           AsyncImage( model = products.image, contentDescription ="Image", modifier = Modifier.fillMaxWidth() , contentScale = ContentScale.FillWidth)
+//
+//            Text("Welcome to Trenday",
+//                fontSize = 20.sp,
+//                color = Color.Black,
+//                fontFamily = FontFamily.SansSerif,
+//                modifier = Modifier
+//                    .align(Alignment.BottomStart)
+//                    .padding(start = 16.dp, bottom = 26.dp))
+//        }
 
         Spacer(modifier = Modifier.height(30.dp))
         Column(Modifier.padding(start = 18.dp, end = 14.dp)) {
 
-            Row( modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween ,verticalAlignment = Alignment.CenterVertically,  ) {
-                Text(text = "Sale " ,
-                    fontSize = 11.sp,
-                    color = Color.Black,
-                    fontFamily = FontFamily.SansSerif,)
-
-                Spacer(modifier = Modifier.weight(1f))
-                Text(text = "View All ")
-            }
+//            Row( modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween ,verticalAlignment = Alignment.CenterVertically,  ) {
+//                Text(text = "All products " ,
+//                    fontSize = 11.sp,
+//                    color = Color.Black,
+//                    fontFamily = FontFamily.SansSerif,)
+//
+//            }
             Spacer(modifier = Modifier.height(22.dp))
             //item
             Column {
                 Box (modifier = Modifier.height(210.dp)
                     .clickable{navigator.push(ProductsScreen(products.id))}){
                     AsyncImage( modifier = Modifier
-                        .height(190.dp)
+                        .height(200.dp)
                         .width(150.dp), contentScale = ContentScale.Crop, model = products.image, contentDescription ="Image")
 
                     Button(onClick = {} , enabled = false, colors = ButtonDefaults.buttonColors(disabledContainerColor = Color.Red,containerColor = Color.Red) ,
@@ -234,8 +253,10 @@ fun HomeProductCard(products: DataXXXXXX) {
                             .padding(top = 5.dp)) {
 
                         //add to favorite
-                        IconButton(onClick = {products.in_favorites=true} ) {
-                            Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = Color.Gray)
+                        IconButton(onClick = {
+                            isFavorite.value = !isFavorite.value
+                            products.in_favorites=isFavorite.value} ) {
+                            Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = if (isFavorite.value) Color.Red else  Color.Gray)
                         }
                         Spacer(modifier = Modifier.height(15.dp))
                     }
@@ -260,7 +281,9 @@ fun HomeProductCard(products: DataXXXXXX) {
                 Text(text = products.name ,
                     fontSize = 20.sp ,
                     fontFamily = FontFamily.Cursive ,
-                    color = Color.Black
+                    color = Color.Black,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
@@ -290,6 +313,34 @@ fun HomeProductCard(products: DataXXXXXX) {
     }
 
 }
+
+
+@Composable
+fun BannerSection(banners: List<String>) { // Assume banners is a list of image URLs
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 7.dp)
+    ) {
+        items(banners) { banner ->
+            BannerCard(bannerImage = banner)
+        }
+    }
+}
+
+@Composable
+fun BannerCard(bannerImage: String) {
+    AsyncImage(
+        model = bannerImage,
+        contentDescription = "Banner Image",
+        modifier = Modifier
+            .height(150.dp)  // Adjust height as needed
+            .padding(horizontal = 8.dp)
+            .fillMaxWidth(),
+        contentScale = ContentScale.FillWidth
+    )
+}
+
 @Composable
 fun StarRatingBar(
     maxStars: Int = 5,

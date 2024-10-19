@@ -23,7 +23,7 @@ fun CategoryItem (category: DataXXXX,) {
             .padding(8.dp)
             .width(100.dp)
             .clickable {
-                navigator.push(CategoryDetailsScreen(category.id))
+                navigator.push(CategoryDetailsScreen(category.id,category.name))
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

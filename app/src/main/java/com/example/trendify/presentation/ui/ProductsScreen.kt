@@ -3,9 +3,12 @@ package com.example.trendify.presentation.ui
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.trendify.data.model.DataXXXXXX
 import com.example.trendify.data.model.DataXXXXXXXX
 import com.example.trendify.presentation.viewmodel.ProductsViewModel
@@ -46,11 +51,6 @@ class ProductsScreen(private val id: Int) : Screen {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Product Detail",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
 
             val product = productResponse.value?.data
 
@@ -62,15 +62,35 @@ class ProductsScreen(private val id: Int) : Screen {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ProductCard(product: DataXXXXXX) {
-        Column(
+        val scrollstate = rememberScrollState()
+        val navigator = LocalNavigator.currentOrThrow
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Product Detail") },
+                    navigationIcon = {
+                        IconButton(onClick = { navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back to Home"
+                            )
+                        }
+                    }
+                )
+            }
+        ) { padding ->
+            Column(
             modifier = Modifier
                 .padding(16.dp)
                 .background(Color.White, shape = RoundedCornerShape(16.dp))
                 .fillMaxWidth()
+                .verticalScroll(scrollstate)
                 .padding(16.dp)
         ) {
+
             AsyncImage(
                 model = product.image,
                 contentDescription = "Product Image",
@@ -147,4 +167,5 @@ class ProductsScreen(private val id: Int) : Screen {
             }
         }
     }
+}
 }
