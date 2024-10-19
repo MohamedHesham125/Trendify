@@ -44,10 +44,11 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
 import com.example.trendify.data.model.AddOrDeleteCartRequest
 import com.example.trendify.data.model.CartItem
+import com.example.trendify.data.model.DataXXXXXX
 import com.example.trendify.data.model.productss
 import com.example.trendify.presentation.viewmodel.CartViewModel
 
-class CartScreen : Screen {
+class CartScreen(val products: List<DataXXXXXX>) : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
@@ -71,18 +72,20 @@ class CartScreen : Screen {
         ) { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
 
-                // LazyColumn for Cart Products
-                cartResponse.value?.data?.data?.let { cartItems ->
+                // LazyColumn for Favorite Products
+                val filteredcCart = products.filter { it.in_cart }
+
+                if (filteredcCart.isNotEmpty()) {
+
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        items(cartItems) { cartItem ->
-                            CartProductCard(product = cartItem)
+                        items(filteredcCart) { CartItem ->
+                            CartProductCard(product = CartItem)
                         }
                     }
-                } ?: run {
-                    // Handle empty or loading state if necessary
-                    emptyCartMessage()
+                } else {
+                    emptyCartMessage() // Show message if no items are in favorites
                 }
 
                 // Proceed to Checkout Button
@@ -107,7 +110,7 @@ class CartScreen : Screen {
     }
 
     @Composable
-    fun CartProductCard(product: productss) {
+    fun CartProductCard(product: DataXXXXXX) {
         val viewModel: CartViewModel = hiltViewModel()
         Card(
             modifier = Modifier
@@ -121,7 +124,7 @@ class CartScreen : Screen {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                    model = product.image ?: "",
+                    model = product.image,
                     contentDescription = null,
                     modifier = Modifier
                         .size(80.dp)
@@ -130,7 +133,7 @@ class CartScreen : Screen {
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = product.name ?: "No Title",
+                        text = product.name,
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text(
@@ -147,9 +150,7 @@ class CartScreen : Screen {
 
                 // Delete Icon Button
                 IconButton(onClick = {
-                    product.id.let { id ->
-                        viewModel.addOrDeleteCarts(AddOrDeleteCartRequest(id))
-                    }
+                    product.in_cart = false
                 }) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
                 }

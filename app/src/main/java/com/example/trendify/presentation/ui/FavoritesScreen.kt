@@ -36,13 +36,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
-import com.example.trendify.data.model.DataXXXX
-import com.example.trendify.data.model.DataXXXXX
 import com.example.trendify.data.model.DataXXXXXX
-import com.example.trendify.data.model.Favorite
 import com.example.trendify.presentation.viewmodel.FavoritesViewModel
 
-class FavoriteScreen : Screen {
+class FavoriteScreen(val products: List<DataXXXXXX>) : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
@@ -65,11 +62,10 @@ class FavoriteScreen : Screen {
             Column(modifier = Modifier.padding(paddingValues)) {
 
                 // LazyColumn for Favorite Products
-                favoriteResponse.value?.data?.data?.let { favoritesItems ->
-                    val filteredFavorites = favoritesItems.filter { it.in_favorites }
+                    val filteredFavorites = products.filter { it.in_favorites }
 
                     if (filteredFavorites.isNotEmpty()) {
-                        println("state is good: $filteredFavorites")
+
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
@@ -78,10 +74,9 @@ class FavoriteScreen : Screen {
                             }
                         }
                     } else {
-                        println("state is bad: $filteredFavorites")
                         emptyFavoriteMessage() // Show message if no items are in favorites
                     }
-                }
+
             }
         }
     }
@@ -126,7 +121,7 @@ class FavoriteScreen : Screen {
                 }
 
                 // Remove from Favorites Icon Button
-                IconButton(onClick = { /* Handle remove from favorites */ }) {
+                IconButton(onClick = { product.in_favorites = false }) {
                     Icon(Icons.Default.Delete, contentDescription = "Remove from favorites")
                 }
             }

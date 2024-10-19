@@ -27,8 +27,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import coil.compose.AsyncImage
-import com.example.market.data.model.Product
 import com.example.trendify.data.model.DataXXXXXX
+import com.example.trendify.data.model.products
 import com.example.trendify.presentation.viewmodel.CategoryViewModel
 import com.example.trendify.presentation.viewmodel.HomeViewModel
 
@@ -65,7 +65,9 @@ class HomeScreen : Screen {
                 )
             },
             bottomBar = {
-                BottomNavigationBar()
+                homeResponse.value?.data?.products?.let { products ->
+                    BottomNavigationBar(products = products)
+                }
             }
         ) { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
@@ -143,7 +145,7 @@ class HomeScreen : Screen {
 }
 
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(products: List<DataXXXXXX>) {
     val navigator = LocalNavigator.currentOrThrow
     NavigationBar(
         containerColor = Color.White // You can set the background color here
@@ -156,7 +158,7 @@ fun BottomNavigationBar() {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
             selected = false,
-            onClick = { navigator.push(FavoriteScreen()) }
+            onClick = { navigator.push(FavoriteScreen(products)) }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
@@ -166,7 +168,7 @@ fun BottomNavigationBar() {
         NavigationBarItem(
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Payment") },
             selected = false,
-            onClick = { navigator.push(CartScreen()) }
+            onClick = { navigator.push(CartScreen(products)) }
         )
     }
 }
@@ -233,7 +235,7 @@ fun HomeProductCard(products: DataXXXXXX) {
 
                         //add to favorite
 
-                        IconButton(onClick = {products.in_favorites=true } ) {
+                        IconButton(onClick = {products.in_favorites=true} ) {
                             Icon(Icons.Outlined.Favorite, contentDescription = "Favorite" , tint = Color.Red)
 
                         }
