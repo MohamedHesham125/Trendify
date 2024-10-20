@@ -201,28 +201,9 @@ fun HomeProductCard(products: DataXXXXXX) {
     Column(modifier = Modifier
         .padding(16.dp)
         .fillMaxSize()) {
-//        Box(modifier = Modifier.fillMaxWidth()){
-//           AsyncImage( model = products.image, contentDescription ="Image", modifier = Modifier.fillMaxWidth() , contentScale = ContentScale.FillWidth)
-//
-//            Text("Welcome to Trenday",
-//                fontSize = 20.sp,
-//                color = Color.Black,
-//                fontFamily = FontFamily.SansSerif,
-//                modifier = Modifier
-//                    .align(Alignment.BottomStart)
-//                    .padding(start = 16.dp, bottom = 26.dp))
-//        }
 
         Spacer(modifier = Modifier.height(30.dp))
         Column(Modifier.padding(start = 18.dp, end = 14.dp)) {
-
-//            Row( modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween ,verticalAlignment = Alignment.CenterVertically,  ) {
-//                Text(text = "All products " ,
-//                    fontSize = 11.sp,
-//                    color = Color.Black,
-//                    fontFamily = FontFamily.SansSerif,)
-//
-//            }
             Spacer(modifier = Modifier.height(22.dp))
             //item
             Column {

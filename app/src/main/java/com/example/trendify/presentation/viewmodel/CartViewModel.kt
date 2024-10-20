@@ -2,7 +2,7 @@ package com.example.trendify.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.template.interceptor.AuthInterceptor
+import com.example.trendify.interceptor.AuthInterceptor
 import com.example.trendify.data.model.AddOrDeleteCartRequest
 import com.example.trendify.data.model.AddOrDeleteCartResponse
 import com.example.trendify.data.model.GetCartsResponse

@@ -1,6 +1,6 @@
 package com.example.trendify.di
 
-import com.example.template.interceptor.AuthInterceptor
+import com.example.trendify.interceptor.AuthInterceptor
 import com.example.trendify.data.networking.ApiServices
 import dagger.Module
 import dagger.Provides

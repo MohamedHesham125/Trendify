@@ -2,7 +2,7 @@ package com.example.trendify.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.template.interceptor.AuthInterceptor
+import com.example.trendify.interceptor.AuthInterceptor
 import com.example.trendify.data.model.LoginRequest
 import com.example.trendify.data.model.LoginResponse
 import com.example.trendify.data.networking.ApiServices

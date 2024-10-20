@@ -2,12 +2,9 @@ package com.example.trendify.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.template.interceptor.AuthInterceptor
-import com.example.trendify.data.model.AddOrDeleteCartRequest
-import com.example.trendify.data.model.AddOrDeleteCartResponse
+import com.example.trendify.interceptor.AuthInterceptor
 import com.example.trendify.data.model.AddOrDeleteFavRequest
 import com.example.trendify.data.model.AddOrDeleteFavResponse
-import com.example.trendify.data.model.GetCartsResponse
 import com.example.trendify.data.model.GetFavoritesResponse
 import com.example.trendify.data.networking.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel

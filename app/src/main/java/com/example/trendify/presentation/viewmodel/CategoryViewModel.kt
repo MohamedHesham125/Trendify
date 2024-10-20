@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trendify.data.model.DataXXXX
 import com.example.trendify.data.model.DataXXXXXX
-import com.example.template.interceptor.AuthInterceptor
+import com.example.trendify.interceptor.AuthInterceptor
 import com.example.trendify.data.networking.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
