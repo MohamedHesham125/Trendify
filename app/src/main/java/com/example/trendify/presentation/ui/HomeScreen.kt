@@ -230,7 +230,7 @@ fun HomeProductCard(products: DataXXXXXX) {
                     .clickable{navigator.push(ProductsScreen(products.id))}){
                     AsyncImage( modifier = Modifier
                         .height(200.dp)
-                        .width(150.dp), contentScale = ContentScale.Crop, model = products.image, contentDescription ="Image")
+                        .width(150.dp), contentScale = ContentScale.FillWidth, model = products.image, contentDescription ="Image")
 
                     Button(onClick = {} , enabled = false, colors = ButtonDefaults.buttonColors(disabledContainerColor = Color.Red,containerColor = Color.Red) ,
                         modifier = Modifier

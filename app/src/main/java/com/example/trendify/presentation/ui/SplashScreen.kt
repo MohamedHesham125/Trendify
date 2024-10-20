@@ -77,11 +77,11 @@ class SplashScreen : Screen {
                         .scale(scale)
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
                 // App Name with fade-in animation
                 Text(
-                    text = "Welcome to Trenday",
+                    text = "Welcome to Trendify",
                     style = MaterialTheme.typography.headlineMedium.copy(
                         color = Color.White,
                         fontWeight = FontWeight.Bold

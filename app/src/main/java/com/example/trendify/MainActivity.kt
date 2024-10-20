@@ -15,6 +15,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.example.trendify.presentation.ui.HomeScreen
 import com.example.trendify.presentation.ui.LoginSceen
 import com.example.trendify.presentation.ui.RegisterScreen
+import com.example.trendify.presentation.ui.SplashScreen
 import com.example.trendify.ui.theme.TrendifyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             TrendifyTheme {
-                Navigator(screen = LoginSceen())
+                Navigator(screen = SplashScreen())
             }
         }
     }
